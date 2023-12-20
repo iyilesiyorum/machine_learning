@@ -4,7 +4,7 @@ import joblib
 
 def get_garanti_index(selected_garanti):
     garanti_dict = {'xiaomi garantili': 1, 'apple garantili': 2, 'samsung garantili': 3, 'resmi distrübitör': 4, 'genpa': 5}
-    return garanti_dict[selected_garanti.lower()] 
+    return garanti_dict[selected_garanti.lower()]  # Küçük harfe çevirerek eşleşmeyi sağla
 
 def get_marka_index(selected_marka):
     marka_dict = {'Xiaomi': 1, 'Apple': 2, 'Samsung': 3, 'Reeder': 4}
@@ -13,33 +13,33 @@ def get_marka_index(selected_marka):
 def run_app():
     st.title('Uygulamaya hoşgeldiniz.')
 
-    # Markalarin sayisal karsiliginin yazdirilmasi
+    # markalarin sayi karsiliklari
     st.write("1: Xiaomi")
     st.write("2: Apple")
     st.write("3: Samsung")
     st.write("4: Reeder")
 
-    # Kullanici marka secimini butonlar ile yapiyor
-    selected_marka = st.button('Xiaomi')
-    selected_brand = get_marka_index('Xiaomi') if selected_marka else None
+    # marka secimi
+    selected_marka_xiaomi = st.button('Xiaomi')
+    selected_marka = get_marka_index('Xiaomi') if selected_marka_xiaomi else None
 
-    selected_marka = st.button('Apple')
-    selected_brand = get_marka_index('Apple') if selected_marka else None
+    selected_marka_apple = st.button('Apple')
+    selected_marka = get_marka_index('Apple') if selected_marka_apple else None
 
-    selected_marka = st.button('Samsung')
-    selected_brand = get_marka_index('Samsung') if selected_marka else None
+    selected_marka_samsung = st.button('Samsung')
+    selected_marka = get_marka_index('Samsung') if selected_marka_samsung else None
 
-    selected_marka = st.button('Reeder')
-    selected_brand = get_marka_index('Reeder') if selected_marka else None
+    selected_marka_reeder = st.button('Reeder')
+    selected_marka = get_marka_index('Reeder') if selected_marka_reeder else None
 
-    # Garanti turlerinin sayisal karsiliklarinin yazdirilmasi
+    # aciklama kismi
     st.write("1: Xiaomi Garantili")
     st.write("2: Apple Garantili")
     st.write("3: Samsung Garantili")
     st.write("4: Resmi Distrübitör")
     st.write("5: Genpa")
 
-    # Butonlar araciligiyla garanti secimi yaptiriliyor
+    # Kullanıcı garanti türü seçimini butonlar aracılığıyla yapsın
     selected_garanti_xiaomi = st.button('Xiaomi Garantili')
     selected_garanti = get_garanti_index('xiaomi garantili') if selected_garanti_xiaomi else None
 
@@ -58,8 +58,8 @@ def run_app():
     selected_memory = st.number_input('Dahili Hafıza', min_value=32, max_value=256)
     st.write("Dahili Hafıza:" + str(selected_memory) + "GB")
 
-    selected_front_cam = st.slider("Kamera Çözünürlüğü:", min_value=8, max_value=50)
-    st.write("Kamera Çözünürlüğü:" + str(selected_front_cam) + "MP")
+    selected_front_cam = st.slider("Ön Kamera Çözünürlüğü:", min_value=8, max_value=50)
+    st.write("Ön Kamera Çözünürlüğü:" + str(selected_front_cam) + "MP")
 
     selected_ram = st.number_input("RAM Kapasitesi", min_value=2, max_value=12)
     st.write("RAM Kapasitesi:" + str(selected_ram) + "GB")
@@ -71,12 +71,13 @@ def run_app():
     
     selected_connectionSpeed = st.radio("Bağlantı Hızı", ('4.5G', '5G'))
 
-    # Modeli yukleme ve tahmin islemi
-    model = joblib.load("support_vector_machines.pkl")
-    features = [selected_memory, selected_front_cam, selected_ram, selected_battery, selected_screenSize, selected_connectionSpeed, selected_brand, selected_garanti]
+    # Modeli yukleme ve tahmin yapma
+    model = joblib.load(r"C:\Users\hakan\source\repos\machine_learning\support_vector_machines.pkl")
+    features = [selected_memory, selected_front_cam, selected_ram, selected_battery, selected_screenSize, selected_connectionSpeed, selected_marka, selected_garanti]
     prediction = model.predict([features])
 
     st.write("Tahmini Fiyat:", prediction[0])
 
 # Ana uygulama
 run_app()
+
