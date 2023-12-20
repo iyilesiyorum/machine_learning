@@ -3,23 +3,23 @@ import pandas as pd
 import joblib
 
 def get_garanti_index(selected_garanti):
-    garanti_dict = {'xiaomi garantili': 1, 'apple garantili': 2, 'samsung garantili': 3, 'resmi distrübitör': 4, 'genpa': 5}
-    return garanti_dict[selected_garanti.lower()]  # Küçük harfe çevirerek eşleşmeyi sağla
+    garanti_dict = {'xiaomi garantili': 1, 'apple garantili': 2, 'samsung garantili': 3, 'resmi distrÃ¼bitÃ¶r': 4, 'genpa': 5}
+    return garanti_dict[selected_garanti.lower()] 
 
 def get_marka_index(selected_marka):
     marka_dict = {'Xiaomi': 1, 'Apple': 2, 'Samsung': 3, 'Reeder': 4}
     return marka_dict[selected_marka]
 
 def run_app():
-    st.title('Uygulamaya hoşgeldiniz.')
+    st.title('Uygulamaya hoÅŸgeldiniz.')
 
-    # Kullanıcı marka seçimini yapmadan önce hangi sayının hangi markaya denk geldiğini belirtelim
+    # Markalarin sayisal karsiliginin yazdirilmasi
     st.write("1: Xiaomi")
     st.write("2: Apple")
     st.write("3: Samsung")
     st.write("4: Reeder")
 
-    # Kullanıcı marka seçimini butonlar aracılığıyla yapsın
+    # Kullanici marka secimini butonlar ile yapiyor
     selected_marka = st.button('Xiaomi')
     selected_brand = get_marka_index('Xiaomi') if selected_marka else None
 
@@ -32,14 +32,14 @@ def run_app():
     selected_marka = st.button('Reeder')
     selected_brand = get_marka_index('Reeder') if selected_marka else None
 
-    # Kullanıcı garanti türü seçimini yapmadan önce hangi sayının hangi garanti türüne denk geldiğini belirtelim
+    # Garanti turlerinin sayisal karsiliklarinin yazdirilmasi
     st.write("1: Xiaomi Garantili")
     st.write("2: Apple Garantili")
     st.write("3: Samsung Garantili")
-    st.write("4: Resmi Distrübitör")
+    st.write("4: Resmi DistrÃ¼bitÃ¶r")
     st.write("5: Genpa")
 
-    # Kullanıcı garanti türü seçimini butonlar aracılığıyla yapsın
+    # Butonlar araciligiyla garanti secimi yaptiriliyor
     selected_garanti_xiaomi = st.button('Xiaomi Garantili')
     selected_garanti = get_garanti_index('xiaomi garantili') if selected_garanti_xiaomi else None
 
@@ -49,17 +49,17 @@ def run_app():
     selected_garanti_samsung = st.button('Samsung Garantili')
     selected_garanti = get_garanti_index('samsung garantili') if selected_garanti_samsung else None
 
-    selected_garanti_resmi = st.button('Resmi Distrübitör')
-    selected_garanti = get_garanti_index('resmi distrübitör') if selected_garanti_resmi else None
+    selected_garanti_resmi = st.button('Resmi DistrÃ¼bitÃ¶r')
+    selected_garanti = get_garanti_index('resmi distrÃ¼bitÃ¶r') if selected_garanti_resmi else None
 
     selected_garanti_genpa = st.button('Genpa')
     selected_garanti = get_garanti_index('genpa') if selected_garanti_genpa else None
 
-    selected_memory = st.number_input('Dahili Hafıza', min_value=32, max_value=256)
-    st.write("Dahili Hafıza:" + str(selected_memory) + "GB")
+    selected_memory = st.number_input('Dahili HafÄ±za', min_value=32, max_value=256)
+    st.write("Dahili HafÄ±za:" + str(selected_memory) + "GB")
 
-    selected_front_cam = st.slider("Ön Kamera Çözünürlüğü:", min_value=8, max_value=50)
-    st.write("Ön Kamera Çözünürlüğü:" + str(selected_front_cam) + "MP")
+    selected_front_cam = st.slider("Kamera Ã‡Ã¶zÃ¼nÃ¼rlÃ¼ÄŸÃ¼:", min_value=8, max_value=50)
+    st.write("Kamera Ã‡Ã¶zÃ¼nÃ¼rlÃ¼ÄŸÃ¼:" + str(selected_front_cam) + "MP")
 
     selected_ram = st.number_input("RAM Kapasitesi", min_value=2, max_value=12)
     st.write("RAM Kapasitesi:" + str(selected_ram) + "GB")
@@ -69,9 +69,9 @@ def run_app():
 
     selected_screenSize = st.slider("Ekran Boyutu", min_value=5.1, max_value=7.0)
     
-    selected_connectionSpeed = st.radio("Bağlantı Hızı", ('4.5G', '5G'))
+    selected_connectionSpeed = st.radio("BaÄŸlantÄ± HÄ±zÄ±", ('4.5G', '5G'))
 
-    # Modeli yükleme ve tahmin yapma
+    # Modeli yukleme ve tahmin islemi
     model = joblib.load("support_vector_machines.pkl")
     features = [selected_memory, selected_front_cam, selected_ram, selected_battery, selected_screenSize, selected_connectionSpeed, selected_brand, selected_garanti]
     prediction = model.predict([features])
